@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { FormInput } from '../../admin/client/App/elemental';
+import { FormInput } from 'elemental';
 import { fade } from '../../admin/client/utils/color';
 import theme from '../../admin/client/theme';
 
@@ -16,12 +16,17 @@ function FileChangeMessage ({ style, color, ...props }) {
 		styles.color = theme.color[color];
 	}
 
+	const href = { ...props }.href ? <img src={{ ...props }.href} width="100%" /> : null;
+
 	return (
-		<FormInput
-			noedit
-			style={styles}
-			{...props}
-		/>
+		<div>
+			<FormInput
+				noedit
+				style={styles}
+				{...props}
+			/>
+			{href}
+		</div>
 	);
 };
 
