@@ -10,7 +10,6 @@ module.exports = Field.create({
 	},
 	renderField () {
 		const { height, path, style, value } = this.props;
-		console.log(this);
 		const styles = {
 			height: height,
 			...style,
@@ -22,7 +21,8 @@ module.exports = Field.create({
 			backgroundColor: '#fff',
 			border: '1px solid #666',
 			padding: 15,
-			fontSize: this.props.values.fontSize
+			fontSize: this.props.values.fontSize,
+			overflowY: 'scroll',
 		};
 		return (
 			<div>
@@ -36,7 +36,8 @@ module.exports = Field.create({
 					value={value}
 				/>
 				<p style={stylesIphone}>
-					<MathDisplay data={value} />
+					<MathDisplay data={value} a={this.props.values.optionA} b={this.props.values.optionB}
+						c={this.props.values.optionC} d={this.props.values.optionD} />
 				</p>
 			</div>
 		);
