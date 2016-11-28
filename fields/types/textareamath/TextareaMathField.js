@@ -44,6 +44,9 @@ module.exports = Field.create({
 				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\frac{x}{y}')}>
 					Fraction
 				</Button>
+				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\text{Enter text here}')}>
+					Text
+				</Button>
 				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\lim_{x \\to \\infty}')}>
 					Limit
 				</Button>
