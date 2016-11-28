@@ -1,13 +1,11 @@
 import Field from '../Field';
 import React from 'react';
 import { Button, FormInput } from '../../../admin/client/App/elemental';
-import MathDisplay from '../../components/MathDisplay';
 
 module.exports = Field.create({
-	defaultValue: 'HelloWorlds',
-	displayName: 'TextareaMathField',
+	displayName: 'TextareaKatexField',
 	statics: {
-		type: 'TextareaMath',
+		type: 'TextareaKatex',
 	},
 
 	// HELPERS
@@ -21,20 +19,10 @@ module.exports = Field.create({
 	},
 	renderField () {
 		const { height, path, style, value } = this.props;
+
 		const styles = {
-			marginTop: '1em',
 			height: height,
 			...style,
-		};
-
-		const stylesIphone = {
-			width: 320,
-			height: 568,
-			backgroundColor: '#fff',
-			border: '1px solid #666',
-			padding: 15,
-			fontSize: this.props.values.fontSize,
-			overflowY: 'scroll',
 		};
 		return (
 			<div>
@@ -83,10 +71,6 @@ module.exports = Field.create({
 					style={styles}
 					value={value}
 				/>
-				<p style={stylesIphone}>
-					<MathDisplay data={value} a={this.props.values.optionA} b={this.props.values.optionB}
-						c={this.props.values.optionC} d={this.props.values.optionD} />
-				</p>
 			</div>
 		);
 	},
