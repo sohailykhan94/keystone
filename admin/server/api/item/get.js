@@ -3,6 +3,7 @@ var async = require('async');
 var listToArray = require('list-to-array');
 
 module.exports = function (req, res) {
+
 	var keystone = req.keystone;
 	var query = req.list.model.findById(req.params.id);
 
@@ -17,7 +18,12 @@ module.exports = function (req, res) {
 		return res.status(401).json({ error: 'fields must be undefined, a string, or an array' });
 	}
 
-	query.exec(function (err, item) {
+	if (req.list.model.modelName === 'SourceQuestion') {
+		query.populate('concepts').exec(callback);
+	} else {
+		query.exec(callback);
+	}
+	function callback (err, item) {
 
 		if (err) return res.status(500).json({ err: 'database error', detail: err });
 		if (!item) return res.status(404).json({ err: 'not found', id: req.params.id });
@@ -114,5 +120,5 @@ module.exports = function (req, res) {
 				drilldown: drilldown,
 			}));
 		});
-	});
+	};
 };
