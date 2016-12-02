@@ -18,7 +18,7 @@ module.exports = function (req, res) {
 		return res.status(401).json({ error: 'fields must be undefined, a string, or an array' });
 	}
 
-	if (req.list.model.modelName === 'SourceQuestion') {
+	if (req.list.model.modelName === 'SourceQuestion' && req.headers.referer.indexOf('quizzes') > -1) {
 		query.populate('concepts').exec(callback);
 	} else {
 		query.exec(callback);

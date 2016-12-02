@@ -118,13 +118,13 @@ module.exports = Field.create({
 				url: Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value,
 				responseType: 'json',
 			}, (err, resp, data) => {
-				if (err || !data) return done(err);
+				if (err || !data || data.err) return done(err);
 				console.log(data);
 				var newData = {
 					name: data.fields.image.url,
 					id: data.id,
 					concepts: data.fields.concepts,
-				}
+				};
 				this.cacheItem(newData);
 				done(err, newData);
 			});
@@ -197,27 +197,28 @@ module.exports = Field.create({
 		this.closeCreate();
 	},
 
+	getConceptNames (concepts) {
+		var returnVal = '';
+		for (var i = 0; i < concepts.length; i++) {
+			returnVal += '<div class="Select-value"><a href="/keystone/concepts/' + concepts[i]._id
+			+ '" class="Select-value-label">' + concepts[i].name + '</div></a>';
+		}
+		return returnVal;
+	},
+
 	renderSelect (noedit) {
 		let preview = '';
-		function getConceptNames (concepts) {
-			var returnVal = '';
-			for (var i = 0; i < concepts.length; i++) {
-				returnVal += '<div class="Select-value"><a href="/keystone/concepts/' + concepts[i]._id +
-					'" class="Select-value-label">' + concepts[i].name + '</div></a>';
-			}
-			return returnVal;
-		}
-		if (this.state.value) {
-			var dangerousHtml = '<div class="Select--multi">' +
-				'<div class="Select-control">' +
-					'<div class="Select-multi-value-wrapper">' +
-						getConceptNames(this.state.value.concepts) +
-					'</div>' +
-				'</div>' +
-			'</div>';
+		if (this.state.value && this.state.value.name && this.state.value.concepts) {
+			var dangerousHtml = '<div class="Select--multi">'
+				+ '<div class="Select-control">'
+					+ '<div class="Select-multi-value-wrapper">'
+						+ this.getConceptNames(this.state.value.concepts)
+					+ '</div>'
+				+ '</div>'
+			+ '</div>';
 			preview = (
 				<div>
-					<img src={this.state.value.name}  width="100%" />
+					<img src={this.state.value.name} width="100%" />
 					<div dangerouslySetInnerHTML={{ __html: dangerousHtml }} />
 				</div>
 			);

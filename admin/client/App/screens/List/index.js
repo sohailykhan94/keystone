@@ -16,6 +16,7 @@ import {
 	GlyphButton,
 	Pagination,
 	Spinner,
+	Button,
 } from '../../elemental';
 
 import ListFilters from './components/Filtering/ListFilters';
@@ -39,6 +40,8 @@ import {
 	setCurrentPage,
 	selectList,
 	loadInitialItems,
+	setFilter,
+	clearAllFilters,
 } from './actions';
 
 import {
@@ -394,6 +397,63 @@ const ListView = React.createClass({
 	},
 
 	// ==============================
+	// BUTTONS
+	// ==============================
+
+	triggerFilter (values) {
+		var valuesArr = values.split(',');
+		var valObj = {
+			inverted: false,
+			value: valuesArr,
+		};
+		this.props.dispatch(clearAllFilters());
+		this.props.dispatch(setFilter('concepts', valObj));
+	},
+
+	getConceptsButtons (concepts) {
+		var returnVal = [];
+		var _this = this;
+		for (var i = 0; i < concepts.length; i++) {
+			(function iife (index) {
+				var idsArr = concepts[index].ids.join();
+				returnVal.push(<Button variant="hollow" size="small" style={{ marginRight: '1em' }} onClick={() => _this.triggerFilter(idsArr)}>
+					{concepts[index].str}
+				</Button>);
+			})(i);
+		}
+		return returnVal;
+	},
+
+	renderButtons () {
+		var concepts = [];
+		var results = this.props.items.results;
+		for (var i = 0; i < results.length; i++) {
+			var cons = results[i].fields.concepts;
+			var obj = {};
+			obj.ids = [];
+			var str = '';
+			for (var j = 0; j < cons.length; j++) {
+				if (j === 0) {
+					str += cons[j].name;
+				} else {
+					str += ' + ' + cons[j].name;
+				}
+				obj.str = str;
+				obj.ids.push(cons[j].id);
+			}
+			obj.str = str;
+			concepts.push(obj);
+		}
+		return (
+			<Container>
+				<div style={{ marginBottom: '1em', marginTop: '1em' }}>
+					{this.getConceptsButtons(concepts)}
+				</div>
+			</Container>
+		);
+	},
+
+	// ==============================
 	// COMMON
 	// ==============================
 
@@ -465,6 +525,7 @@ const ListView = React.createClass({
 		return (
 			<div>
 				{this.renderHeader()}
+				{this.renderButtons()}
 				<Container>
 					<div style={{ height: 35, marginBottom: '1em', marginTop: '1em' }}>
 						{this.renderManagement()}

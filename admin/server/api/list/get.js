@@ -24,12 +24,17 @@ module.exports = function (req, res) {
 		catch (e) { } // eslint-disable-line no-empty
 	}
 	if (typeof filters === 'object') {
-		assign(where, req.list.addFiltersToQuery(filters));
+		if (filters && filters.concepts) {
+			where.concepts = { $all: filters.concepts.value };
+		} else {
+			assign(where, req.list.addFiltersToQuery(filters));
+		}
 	}
 	if (req.query.search) {
 		assign(where, req.list.addSearchToQuery(req.query.search));
 	}
 	var query = req.list.model.find(where);
+	// console.log(where);
 	if (req.query.populate) {
 		query.populate(req.query.populate);
 	}
