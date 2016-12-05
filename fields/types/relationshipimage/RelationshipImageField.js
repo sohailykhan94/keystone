@@ -164,6 +164,8 @@ module.exports = Field.create({
 			path: this.props.path,
 			value: value,
 		});
+		this._itemsCache = {};
+		this.loadValue(this.props.value);
 	},
 
 	openCreate () {

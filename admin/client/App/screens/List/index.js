@@ -41,7 +41,6 @@ import {
 	selectList,
 	loadInitialItems,
 	setFilter,
-	clearAllFilters,
 } from './actions';
 
 import {
@@ -406,17 +405,39 @@ const ListView = React.createClass({
 			inverted: false,
 			value: valuesArr,
 		};
-		this.props.dispatch(clearAllFilters());
 		this.props.dispatch(setFilter('concepts', valObj));
+	},
+
+	removeDuplicatesUDF (arr, prop) {
+		var new_arr = [];
+		var lookup = {};
+		for (var i in arr) {
+			lookup[arr[i][prop]] = arr[i];
+		}
+		for (i in lookup) {
+			new_arr.push(lookup[i]);
+		}
+		return new_arr;
+	},
+
+	removeDuplicates (concepts) {
+		var mappedArray = concepts.map(function (obj) {
+			var rObj = obj;
+			rObj.mappedId = obj.ids.join('-');
+			return rObj;
+		});
+
+		return this.removeDuplicatesUDF(mappedArray, 'mappedId');
 	},
 
 	getConceptsButtons (concepts) {
 		var returnVal = [];
 		var _this = this;
+		concepts = _this.removeDuplicates(concepts);
 		for (var i = 0; i < concepts.length; i++) {
 			(function iife (index) {
 				var idsArr = concepts[index].ids.join();
-				returnVal.push(<Button variant="hollow" size="small" style={{ marginRight: '1em' }} onClick={() => _this.triggerFilter(idsArr)}>
+				returnVal.push(<Button variant="hollow" size="small" style={{ marginRight: '1em', marginTop: '1em' }} onClick={() => _this.triggerFilter(idsArr)}>
 					{concepts[index].str}
 				</Button>);
 			})(i);
@@ -429,6 +450,9 @@ const ListView = React.createClass({
 		var results = this.props.items.results;
 		for (var i = 0; i < results.length; i++) {
 			var cons = results[i].fields.concepts;
+			if (!cons.length) {
+				continue;
+			}
 			var obj = {};
 			obj.ids = [];
 			var str = '';
@@ -442,12 +466,13 @@ const ListView = React.createClass({
 				obj.ids.push(cons[j].id);
 			}
 			obj.str = str;
+			obj.ids.sort();
 			concepts.push(obj);
 		}
 		return (
 			<Container>
 				<div style={{ marginBottom: '1em', marginTop: '1em' }}>
-					{this.getConceptsButtons(concepts)}
+					{concepts.length ? this.getConceptsButtons(concepts) : null}
 				</div>
 			</Container>
 		);
@@ -525,7 +550,7 @@ const ListView = React.createClass({
 		return (
 			<div>
 				{this.renderHeader()}
-				{this.renderButtons()}
+				{this.props.active.id === 'source-questions' || this.props.active.id === 'quizzes' ? this.renderButtons() : null}
 				<Container>
 					<div style={{ height: 35, marginBottom: '1em', marginTop: '1em' }}>
 						{this.renderManagement()}

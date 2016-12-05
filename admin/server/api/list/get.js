@@ -34,7 +34,6 @@ module.exports = function (req, res) {
 		assign(where, req.list.addSearchToQuery(req.query.search));
 	}
 	var query = req.list.model.find(where);
-	// console.log(where);
 	if (req.query.populate) {
 		query.populate(req.query.populate);
 	}

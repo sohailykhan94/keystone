@@ -47,6 +47,7 @@ class HiddenFileInput extends Component {
 				ref={setRef}
 				tabIndex="-1"
 				type="file"
+				accept="image/*"
 			/>
 		);
 	}
