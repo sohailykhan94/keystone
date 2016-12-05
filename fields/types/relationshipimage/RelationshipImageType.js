@@ -10,7 +10,7 @@ var definePrototypeGetters = require('../../utils/definePrototypeGetters');
  * @extends Field
  * @api public
  */
-function relationshipImage (list, path, options) {
+function relationshipimage (list, path, options) {
 	this.many = (options.many) ? true : false;
 	this.filters = options.filters;
 	this.createInline = (options.createInline) ? true : false;
@@ -18,15 +18,15 @@ function relationshipImage (list, path, options) {
 	this._nativeType = keystone.mongoose.Schema.Types.ObjectId;
 	this._underscoreMethods = ['format', 'getExpandedData'];
 	this._properties = ['isValid', 'many', 'filters', 'createInline'];
-	relationshipImage.super_.call(this, list, path, options);
+	relationshipimage.super_.call(this, list, path, options);
 }
-relationshipImage.properName = 'RelationshipImage';
-util.inherits(relationshipImage, FieldType);
+relationshipimage.properName = 'RelationshipImage';
+util.inherits(relationshipimage, FieldType);
 
 /**
  * Get client-side properties to pass to react field.
  */
-relationshipImage.prototype.getProperties = function () {
+relationshipimage.prototype.getProperties = function () {
 	var refList = this.refList;
 	return {
 		refList: {
@@ -54,7 +54,7 @@ function truthy (value) {
 	return value;
 }
 
-relationshipImage.prototype.getExpandedData = function (item) {
+relationshipimage.prototype.getExpandedData = function (item) {
 	var value = item.get(this.path);
 	if (this.many) {
 		if (!value || !Array.isArray(value)) return [];
@@ -67,7 +67,7 @@ relationshipImage.prototype.getExpandedData = function (item) {
 /**
  * Registers the field on the List's Mongoose Schema.
  */
-relationshipImage.prototype.addToSchema = function (schema) {
+relationshipimage.prototype.addToSchema = function (schema) {
 	var field = this;
 	var def = {
 		type: this._nativeType,
@@ -89,7 +89,7 @@ relationshipImage.prototype.addToSchema = function (schema) {
 /**
  * Gets the field's data from an Item, as used by the React components
  */
-relationshipImage.prototype.getData = function (item) {
+relationshipimage.prototype.getData = function (item) {
 	var value = item.get(this.path);
 	if (this.many) {
 		return Array.isArray(value) ? value : [];
@@ -101,7 +101,7 @@ relationshipImage.prototype.getData = function (item) {
 /**
  * Add filters to a query
  */
-relationshipImage.prototype.addFilterToQuery = function (filter) {
+relationshipimage.prototype.addFilterToQuery = function (filter) {
 	var query = {};
 	if (!Array.isArray(filter.value)) {
 		if (typeof filter.value === 'string' && filter.value) {
@@ -125,7 +125,7 @@ relationshipImage.prototype.addFilterToQuery = function (filter) {
 /**
  * Formats the field value
  */
-relationshipImage.prototype.format = function (item) {
+relationshipimage.prototype.format = function (item) {
 	var value = item.get(this.path);
 	// force the formatted value to be a string - unexpected things happen with ObjectIds.
 	return this.many ? value.join(', ') : (value || '') + '';
@@ -138,7 +138,7 @@ relationshipImage.prototype.format = function (item) {
  * TODO: we're just testing for strings here, so actual MongoID Objects (from
  * mongoose) would fail validation. not sure if this is an issue.
  */
-relationshipImage.prototype.validateInput = function (data, callback) {
+relationshipimage.prototype.validateInput = function (data, callback) {
 	var value = this.getValueFromData(data);
 	var result = false;
 	if (value === undefined || value === null || value === '') {
@@ -166,7 +166,7 @@ relationshipImage.prototype.validateInput = function (data, callback) {
 /**
  * Asynchronously confirms that the provided value is present
  */
-relationshipImage.prototype.validateRequiredInput = function (item, data, callback) {
+relationshipimage.prototype.validateRequiredInput = function (item, data, callback) {
 	var value = this.getValueFromData(data);
 	var result = false;
 	if (value === undefined) {
@@ -199,7 +199,7 @@ relationshipImage.prototype.validateRequiredInput = function (item, data, callba
  *
  * Deprecated
  */
-relationshipImage.prototype.inputIsValid = function (data, required, item) {
+relationshipimage.prototype.inputIsValid = function (data, required, item) {
 	if (!required) return true;
 	if (!(this.path in data) && item && ((this.many && item.get(this.path).length) || item.get(this.path))) return true;
 	if (typeof data[this.path] === 'string') {
@@ -215,9 +215,9 @@ relationshipImage.prototype.inputIsValid = function (data, required, item) {
  * Treats an empty string as a null value.
  * If data object does not contain the path field, then delete the field.
  */
-relationshipImage.prototype.updateItem = function (item, data, callback) {
+relationshipimage.prototype.updateItem = function (item, data, callback) {
 	if (item.populated(this.path)) {
-		throw new Error('fieldTypes.relationshipImage.updateItem() Error - You cannot update populated relationships.');
+		throw new Error('fieldTypes.relationshipimage.updateItem() Error - You cannot update populated relationships.');
 	}
 	if (this.many) {
 		var arr = item.get(this.path);
@@ -243,7 +243,7 @@ relationshipImage.prototype.updateItem = function (item, data, callback) {
 	process.nextTick(callback);
 };
 
-definePrototypeGetters(relationshipImage, {
+definePrototypeGetters(relationshipimage, {
 	// Returns true if the relationship configuration is valid
 	isValid: function () {
 		return keystone.list(this.options.ref) ? true : false;
@@ -259,4 +259,4 @@ definePrototypeGetters(relationshipImage, {
 });
 
 /* Export Field Type */
-module.exports = relationshipImage;
+module.exports = relationshipimage;
