@@ -6,9 +6,11 @@ import Toolbar from './Toolbar';
 import ToolbarSection from './Toolbar/ToolbarSection';
 import EditFormHeaderSearch from './EditFormHeaderSearch';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import Drilldown from './Drilldown';
 import { GlyphButton, ResponsiveText } from '../../../elemental';
+import xhr from 'xhr';
 
 export const EditFormHeader = React.createClass({
 	displayName: 'EditFormHeader',
@@ -17,6 +19,9 @@ export const EditFormHeader = React.createClass({
 		list: React.PropTypes.object,
 		toggleCreate: React.PropTypes.func,
 	},
+	contextTypes: {
+		router: React.PropTypes.object.isRequired,
+	},
 	getInitialState () {
 		return {
 			searchString: '',
@@ -24,6 +29,32 @@ export const EditFormHeader = React.createClass({
 	},
 	toggleCreate (visible) {
 		this.props.toggleCreate(visible);
+	},
+	newQuestion () {
+		var data = {
+			curriculum: '582d3f0bd722ed5be408ee90',
+			subject: '584522445ee3f59ff5d05c24',
+			sourceQuestion: this.props.data.id,
+		};
+		xhr({
+			url: Keystone.adminPath + '/api/quizzes/create',
+			responseType: 'json',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'x-csrf-token': Keystone.csrf.header['x-csrf-token'],
+			},
+			body: JSON.stringify(data),
+		}, function (err, resp, data) {
+			if (err) console.log(err);
+			if (resp.statusCode === 200) {
+				var newId = data.id;
+				var quizzesPath = 'quizzes';
+				browserHistory.push(`${Keystone.adminPath}/${quizzesPath}/${newId}`);
+			} else {
+				console.log('500 ' + resp);
+			}
+		});
 	},
 	searchStringChanged (event) {
 		this.setState({
@@ -108,7 +139,7 @@ export const EditFormHeader = React.createClass({
 					onChange={this.searchStringChanged}
 					onKeyUp={this.handleEscapeKey}
 				/>
-				{/* <GlyphField glyphColor="#999" glyph="search">
+				{ /* <GlyphField glyphColor="#999" glyph="search">
 					<FormInput
 						ref="searchField"
 						type="search"
@@ -119,15 +150,26 @@ export const EditFormHeader = React.createClass({
 						placeholder="Search"
 						style={{ paddingLeft: '2.3em' }}
 					/>
-				</GlyphField> */}
+				</GlyphField> */ }
 			</form>
 		);
 	},
 	renderInfo () {
 		return (
 			<ToolbarSection right>
+				{this.props.list.path === 'source-questions' ? this.renderQuestionCreateButton() : null}
 				{this.renderCreateButton()}
 			</ToolbarSection>
+		);
+	},
+
+	renderQuestionCreateButton () {
+		let props = {};
+		props.onClick = () => { this.newQuestion(); };
+		return (
+			<GlyphButton data-e2e-item-create-button="true" color="success" glyph="plus" style={{ marginRight: '2em' }} position="left" {...props} >
+				<ResponsiveText hiddenXS={`New Quiz`} visibleXS="Create Quiz" />
+			</GlyphButton>
 		);
 	},
 	renderCreateButton () {
