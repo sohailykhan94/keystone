@@ -24,6 +24,7 @@ const classes = StyleSheet.create({
 	},
 });
 
+
 const App = (props) => {
 	const listsByPath = require('../utils/lists').listsByPath;
 	let children = props.children;
@@ -31,14 +32,23 @@ const App = (props) => {
 	let currentList, currentSection;
 	if (props.params.listId) {
 		currentList = listsByPath[props.params.listId];
+		var hasAccess = true;
+		if (Keystone.user.role.toLowerCase() !== 'admin' && currentList.key !== 'Quiz') {
+			hasAccess = false;
+		}
 		// If we're on a list path that doesn't exist (e.g. /keystone/gibberishasfw34afsd) this will
 		// be undefined
-		if (!currentList) {
+		if (!currentList || !hasAccess) {
+			var quizzesPath = Keystone.adminPath + '/quizzes';
 			children = (
 				<Container>
-					<p>List not found!</p>
+					<p>You do not have access to this feature!</p>
 					<Link to={`${Keystone.adminPath}`}>
 						Go back home
+					</Link>
+					<br />
+					<Link to={`${quizzesPath}`}>
+						Go to Quizzes
 					</Link>
 				</Container>
 			);

@@ -38,6 +38,7 @@ module.exports = function IndexRoute (req, res) {
 		user: {
 			id: req.user.id,
 			name: UserList.getDocumentName(req.user) || '(no name)',
+			role: req.user.roles || '(no role)',
 		},
 		userList: UserList.key,
 		version: keystone.version,
@@ -54,6 +55,7 @@ module.exports = function IndexRoute (req, res) {
 			importcss: keystone.get('wysiwyg importcss') || '',
 		} },
 	};
+
 	keystoneData.csrf.header[keystone.security.csrf.CSRF_HEADER_KEY] = keystone.security.csrf.getToken(req, res);
 
 	var codemirrorPath = keystone.get('codemirror url path')
