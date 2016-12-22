@@ -121,9 +121,10 @@ module.exports = Field.create({
 				if (err || !data || data.err) return done(err);
 				console.log(data);
 				var newData = {
-					name: data.fields.image.url,
+					imagePath: data.fields.image.url,
 					id: data.id,
 					concepts: data.fields.concepts,
+					name: data.fields.questionId,
 				};
 				this.cacheItem(newData);
 				done(err, newData);
@@ -210,7 +211,7 @@ module.exports = Field.create({
 
 	renderSelect (noedit) {
 		let preview = '';
-		if (this.state.value && this.state.value.name && this.state.value.concepts) {
+		if (this.state.value && this.state.value.imagePath && this.state.value.concepts) {
 			var dangerousHtml = '<div class="Select--multi">'
 				+ '<div class="Select-control">'
 					+ '<div class="Select-multi-value-wrapper">'
@@ -220,7 +221,7 @@ module.exports = Field.create({
 			+ '</div>';
 			preview = (
 				<div>
-					<img src={this.state.value.name} width="100%" />
+					<img src={this.state.value.imagePath} width="100%" />
 					<div dangerouslySetInnerHTML={{ __html: dangerousHtml }} />
 				</div>
 			);
