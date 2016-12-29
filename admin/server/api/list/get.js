@@ -7,6 +7,11 @@ module.exports = function (req, res) {
 	var fields = req.query.fields;
 	var includeCount = req.query.count !== 'false';
 	var includeResults = req.query.results !== 'false';
+	if (req.user.roles.toLowerCase() !== 'admin' && req.list.model.modelName === 'Quiz') {
+		if (req.user.curriculum) {
+			where.curriculum = req.user.curriculum;
+		}
+	}
 	if (includeResults && fields) {
 		if (fields === 'false') {
 			fields = false;
