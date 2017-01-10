@@ -14,7 +14,7 @@ module.exports = Field.create({
 	triggerTemplater (templateString) {
 		var val = {
 			target: {
-				value: this.props.value + ' ' + templateString,
+				value: this.props.value ? (this.props.value + ' ' + templateString) : templateString,
 			},
 		};
 		this.valueChanged(val);
@@ -32,7 +32,7 @@ module.exports = Field.create({
 			height: 568,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
-			padding: 15,
+			padding: 16,
 			fontSize: this.props.values.fontSize,
 			overflowY: 'scroll',
 		};

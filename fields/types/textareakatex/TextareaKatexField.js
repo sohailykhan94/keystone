@@ -12,7 +12,7 @@ module.exports = Field.create({
 	triggerTemplater (templateString) {
 		var val = {
 			target: {
-				value: this.props.value + ' ' + templateString,
+				value: this.props.value ? (this.props.value + ' ' + templateString) : templateString,
 			},
 		};
 		this.valueChanged(val);
