@@ -11,6 +11,7 @@ module.exports = function (req, res) {
 		if (req.user.curriculum) {
 			where.curriculum = req.user.curriculum;
 		}
+		where.assignedTo = req.user._id;
 	}
 	if (includeResults && fields) {
 		if (fields === 'false') {
