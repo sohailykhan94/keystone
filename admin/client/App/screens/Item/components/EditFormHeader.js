@@ -35,6 +35,7 @@ export const EditFormHeader = React.createClass({
 			curriculum: '582d3f0bd722ed5be408ee90',
 			subject: '584522445ee3f59ff5d05c24',
 			sourceQuestion: this.props.data.id,
+			assignedTo: Keystone.user.id,
 		};
 		xhr({
 			url: Keystone.adminPath + '/api/quizzes/create',
