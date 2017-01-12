@@ -1,8 +1,8 @@
 module.exports = function (req, res) {
-	var keystone = req.keystone;
-	if (!keystone.security.csrf.validate(req)) {
-		return res.apiError(403, 'invalid csrf');
-	}
+	// var keystone = req.keystone;
+	// if (!keystone.security.csrf.validate(req)) {
+	// 	return res.apiError(403, 'invalid csrf');
+	// }
 
 	var item = new req.list.model();
 	req.list.updateItem(item, req.body, {
