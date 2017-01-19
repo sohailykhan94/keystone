@@ -28,11 +28,11 @@ module.exports = Field.create({
 		};
 
 		const stylesIphone = {
-			width: 320,
+			width: 350,
 			height: 568,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
-			padding: 16,
+			padding: 15,
 			fontSize: this.props.values.fontSize,
 			overflowY: 'scroll',
 		};
@@ -88,7 +88,7 @@ module.exports = Field.create({
 				/>
 				<p style={stylesIphone}>
 					<MathDisplay data={value} a={this.props.values.optionA} b={this.props.values.optionB}
-						c={this.props.values.optionC} d={this.props.values.optionD} />
+						c={this.props.values.optionC} d={this.props.values.optionD} explanation={this.props.values.explanation} />
 				</p>
 			</div>
 		);

@@ -12,17 +12,20 @@ function MathDisplay ({ ...props }) {
 	var	b = ({ ...props }.b);
 	var	c = ({ ...props }.c);
 	var	d = ({ ...props }.d);
+	var	explanation = ({ ...props }.explanation);
 	returnVal = returnVal;
 	try {
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">A</span><span style="margin-left: 16px;" id="inputMath">' + translateMath(a) + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">B</span><span style="margin-left: 16px;" id="inputMath">' + translateMath(b) + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">C</span><span style="margin-left: 16px;" id="inputMath">' + translateMath(c) + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">D</span><span style="margin-left: 16px;" id="inputMath">' + translateMath(d) + '</span></div>';
+		returnVal = returnVal + '<div style="margin-top: 16px; background-color: #f6f6f6;">' + translateMath(explanation) + '</div>';
 	} catch (e) {
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">A</span><span style="margin-left: 16px;" id="inputMath">' + a + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">A</span><span style="margin-left: 16px;" id="inputMath">' + b + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">A</span><span style="margin-left: 16px;" id="inputMath">' + c + '</span></div>';
 		returnVal = returnVal + '<div style="margin-top: 16px; border: 1px solid #DBDBDB;"><span style="padding: 30px 22px; text-align: center; background-color: #f6f6f6; display: inline-block; color: #41AADB;">A</span><span style="margin-left: 16px;" id="inputMath">' + d + '</span></div>';
+		returnVal = returnVal + '<div style="margin-top: 16px; background-color: #f6f6f6;">' + explanation + '</div>';
 	}
 	return (<div dangerouslySetInnerHTML={{ __html: returnVal }} />);
 };
