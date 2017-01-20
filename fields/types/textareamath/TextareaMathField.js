@@ -28,13 +28,14 @@ module.exports = Field.create({
 		};
 
 		const stylesIphone = {
-			width: 380,
+			width: 354,
 			height: 568,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
 			padding: 15,
 			fontSize: this.props.values.fontSize,
 			overflowY: 'scroll',
+			boxShadow: 'inset 0 0 0 15px rgba(144, 0, 0, 0.5)',
 		};
 		return (
 			<div>
