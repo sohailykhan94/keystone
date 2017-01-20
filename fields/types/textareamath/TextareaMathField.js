@@ -28,7 +28,7 @@ module.exports = Field.create({
 		};
 
 		const stylesIphone = {
-			width: 365,
+			width: 380,
 			height: 568,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
