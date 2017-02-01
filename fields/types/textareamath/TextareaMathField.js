@@ -1,7 +1,7 @@
 import Field from '../Field';
 import React from 'react';
 import { Button, FormInput } from '../../../admin/client/App/elemental';
-var MathJax = require('react-mathjax');
+var MathJax = require('react-mathjax/src');
 
 module.exports = Field.create({
 	defaultValue: 'HelloWorlds',
