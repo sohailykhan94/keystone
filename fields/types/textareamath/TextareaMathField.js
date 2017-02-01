@@ -25,6 +25,7 @@ module.exports = Field.create({
 			marginTop: '1em',
 			height: height,
 			...style,
+			lineHeight: '1.3',
 		};
 
 		const stylesIphone = {

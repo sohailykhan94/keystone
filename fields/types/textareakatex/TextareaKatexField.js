@@ -23,6 +23,7 @@ module.exports = Field.create({
 		const styles = {
 			height: height,
 			...style,
+			lineHeight: '1.3',
 		};
 		return (
 			<div>
