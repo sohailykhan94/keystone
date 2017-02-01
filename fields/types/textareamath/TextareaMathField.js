@@ -105,7 +105,7 @@ module.exports = Field.create({
 							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></span></div>
 						</MathJax.Context>
 						<MathJax.Context>
-							<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanatio }</MathJax.Node></div>
+							<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanation }</MathJax.Node></div>
 						</MathJax.Context>
 					</div>
 				</p>
