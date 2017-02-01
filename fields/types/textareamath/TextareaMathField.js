@@ -1,7 +1,7 @@
 import Field from '../Field';
 import React from 'react';
 import { Button, FormInput } from '../../../admin/client/App/elemental';
-import MathDisplay from '../../components/MathDisplay';
+var MathJax = require('react-mathjax');
 
 module.exports = Field.create({
 	defaultValue: 'HelloWorlds',
@@ -28,7 +28,7 @@ module.exports = Field.create({
 		};
 
 		const stylesIphone = {
-			width: 354,
+			width: 358,
 			height: 568,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
@@ -88,8 +88,26 @@ module.exports = Field.create({
 					value={value}
 				/>
 				<p style={stylesIphone}>
-					<MathDisplay data={value} a={this.props.values.optionA} b={this.props.values.optionB}
-						c={this.props.values.optionC} d={this.props.values.optionD} explanation={this.props.values.explanation} />
+					<div>
+						<MathJax.Context>
+							<span><MathJax.Node inline>{value}</MathJax.Node></span>
+						</MathJax.Context>
+						<MathJax.Context>
+							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionA }</MathJax.Node></span></div>
+						</MathJax.Context>
+						<MathJax.Context>
+							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionB }</MathJax.Node></span></div>
+						</MathJax.Context>
+						<MathJax.Context>
+							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionC }</MathJax.Node></span></div>
+						</MathJax.Context>
+						<MathJax.Context>
+							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></span></div>
+						</MathJax.Context>
+						<MathJax.Context>
+							<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanatio }</MathJax.Node></div>
+						</MathJax.Context>
+					</div>
 				</p>
 			</div>
 		);
