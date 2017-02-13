@@ -5,7 +5,6 @@ var styles = {
 		border: '1px solid #DBDBDB',
 	},
 	flexItem: {
-		width: '50px',
 		padding: '30px 22px',
 		textAlign: 'center',
 		backgroundColor: '#f6f6f6',
@@ -14,7 +13,7 @@ var styles = {
 	},
 	flexItemAuto: {
 		width: 'auto',
-		marginLeft: '16px',
+		padding: '16px',
 	},
 };
 
