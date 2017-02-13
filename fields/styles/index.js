@@ -16,7 +16,7 @@ var styles = {
 		padding: '16px',
 	},
 	btnStyling: {
-		margin: '16px',
+		margin: '4px',
 	},
 };
 
