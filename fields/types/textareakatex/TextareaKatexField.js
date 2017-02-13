@@ -1,6 +1,7 @@
 import Field from '../Field';
 import React from 'react';
 import { Button, FormInput } from '../../../admin/client/App/elemental';
+import { btnStyling } from '../../styles';
 
 module.exports = Field.create({
 	displayName: 'TextareaKatexField',
@@ -27,43 +28,43 @@ module.exports = Field.create({
 		};
 		return (
 			<div>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\\\')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\\\')}>
 					New Line
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\frac{x}{y}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\frac{x}{y}')}>
 					Fraction
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\text{Enter text here}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\text{Enter text here}')}>
 					Text
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\lim_{x \\to \\infty}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\lim_{x \\to \\infty}')}>
 					Limit
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\infty')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\infty')}>
 					Infinity Symbol
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('_{n+1}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('_{n+1}')}>
 					Subscript
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('^{n+1}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('^{n+1}')}>
 					Superscript
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\binom{n}{k}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\binom{n}{k}')}>
 					Binomial
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\sqrt{x}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\sqrt{x}')}>
 					Square root
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\sqrt[n]{x}')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\sqrt[n]{x}')}>
 					n root
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\sum_{i=1}^{10} t_i')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\sum_{i=1}^{10} t_i')}>
 					Sum
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\int\\limits_a^b')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\int\\limits_a^b')}>
 					Integral
 				</Button>
-				<Button variant="hollow" size="xsmall" onClick={() => this.triggerTemplater('\\oint')}>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\oint')}>
 					O Integral
 				</Button>
 				<FormInput

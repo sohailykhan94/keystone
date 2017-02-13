@@ -15,6 +15,9 @@ var styles = {
 		width: 'auto',
 		padding: '16px',
 	},
+	btnStyling: {
+		padding: '16px',
+	},
 };
 
 module.exports = styles;
