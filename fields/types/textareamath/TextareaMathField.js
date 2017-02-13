@@ -1,6 +1,7 @@
 import Field from '../Field';
 import React from 'react';
 import { Button, FormInput } from '../../../admin/client/App/elemental';
+import { displayFlex, flexItem, flexItemAuto } from '../../styles';
 var MathJax = require('react-mathjax/src');
 
 module.exports = Field.create({
@@ -94,16 +95,16 @@ module.exports = Field.create({
 							<span><MathJax.Node inline>{value}</MathJax.Node></span>
 						</MathJax.Context>
 						<MathJax.Context>
-							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionA }</MathJax.Node></span></div>
+							<div style={displayFlex}><div style={flexItem}>A</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionA }</MathJax.Node></div></div>
 						</MathJax.Context>
 						<MathJax.Context>
-							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionB }</MathJax.Node></span></div>
+							<div style={displayFlex}><div style={flexItem}>B</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionB }</MathJax.Node></div></div>
 						</MathJax.Context>
 						<MathJax.Context>
-							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionC }</MathJax.Node></span></div>
+							<div style={displayFlex}><div style={flexItem}>C</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionC }</MathJax.Node></div></div>
 						</MathJax.Context>
 						<MathJax.Context>
-							<div style={{ marginTop: '16px', border: '1px solid #DBDBDB' }}><span style={{ padding: '30px 22px', textAlign: 'center', backgroundColor: '#f6f6f6', display: 'inline-block', color: '#41AADB' }}>A</span><span style={{ marginLeft: 16 + 'px' }}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></span></div>
+							<div style={displayFlex}><div style={flexItem}>D</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></div></div>
 						</MathJax.Context>
 						<MathJax.Context>
 							<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanation }</MathJax.Node></div>
