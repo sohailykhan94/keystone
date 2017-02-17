@@ -18,14 +18,7 @@ module.exports = Field.create({
 		};
 		this.valueChanged(val);
 	},
-	renderField () {
-		const { height, path, style, value } = this.props;
-
-		const styles = {
-			height: height,
-			...style,
-			lineHeight: '1.3',
-		};
+	getButtonsTemplate () {
 		return (
 			<div>
 				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\\\')}>
@@ -67,6 +60,20 @@ module.exports = Field.create({
 				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\oint')}>
 					O Integral
 				</Button>
+			</div>
+		);
+	},
+	renderField () {
+		const { height, path, style, value } = this.props;
+
+		const styles = {
+			height: height,
+			...style,
+			lineHeight: '1.3',
+		};
+		return (
+			<div>
+				{this.props.values.hasLatex ? this.getButtonsTemplate() : <div />}
 				<FormInput
 					autoComplete="off"
 					multiline

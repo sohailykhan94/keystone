@@ -20,25 +20,7 @@ module.exports = Field.create({
 		};
 		this.valueChanged(val);
 	},
-	renderField () {
-		const { height, path, style, value } = this.props;
-		const styles = {
-			marginTop: '1em',
-			height: height,
-			...style,
-			lineHeight: '1.3',
-		};
-
-		const stylesIphone = {
-			width: 358,
-			height: 568,
-			backgroundColor: '#fff',
-			border: '1px solid #666',
-			padding: 15,
-			fontSize: this.props.values.fontSize,
-			overflowY: 'scroll',
-			boxShadow: 'inset 0 0 0 15px rgba(144, 0, 0, 0.5)',
-		};
+	getButtonsTemplate () {
 		return (
 			<div>
 				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\\\')}>
@@ -80,6 +62,56 @@ module.exports = Field.create({
 				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('\\oint')}>
 					O Integral
 				</Button>
+			</div>
+		);
+	},
+	getPreviewTemplate (value) {
+		const stylesIphone = {
+			width: 358,
+			height: 568,
+			backgroundColor: '#fff',
+			border: '1px solid #666',
+			padding: 15,
+			fontSize: this.props.values.fontSize,
+			overflowY: 'scroll',
+			boxShadow: 'inset 0 0 0 15px rgba(144, 0, 0, 0.5)',
+		};
+		return (
+			<p style={stylesIphone}>
+				<div>
+					<MathJax.Context>
+						<span><MathJax.Node inline>{value}</MathJax.Node></span>
+					</MathJax.Context>
+					<MathJax.Context>
+						<div style={displayFlex}><div style={flexItem}>A</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionA }</MathJax.Node></div></div>
+					</MathJax.Context>
+					<MathJax.Context>
+						<div style={displayFlex}><div style={flexItem}>B</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionB }</MathJax.Node></div></div>
+					</MathJax.Context>
+					<MathJax.Context>
+						<div style={displayFlex}><div style={flexItem}>C</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionC }</MathJax.Node></div></div>
+					</MathJax.Context>
+					<MathJax.Context>
+						<div style={displayFlex}><div style={flexItem}>D</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></div></div>
+					</MathJax.Context>
+					<MathJax.Context>
+						<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanation }</MathJax.Node></div>
+					</MathJax.Context>
+				</div>
+			</p>
+		);
+	},
+	renderField () {
+		const { height, path, style, value } = this.props;
+		const styles = {
+			marginTop: '1em',
+			height: height,
+			...style,
+			lineHeight: '1.3',
+		};
+		return (
+			<div>
+				{this.props.values.hasLatex ? this.getButtonsTemplate() : <div />}
 				<FormInput
 					autoComplete="off"
 					multiline
@@ -89,28 +121,7 @@ module.exports = Field.create({
 					style={styles}
 					value={value}
 				/>
-				<p style={stylesIphone}>
-					<div>
-						<MathJax.Context>
-							<span><MathJax.Node inline>{value}</MathJax.Node></span>
-						</MathJax.Context>
-						<MathJax.Context>
-							<div style={displayFlex}><div style={flexItem}>A</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionA }</MathJax.Node></div></div>
-						</MathJax.Context>
-						<MathJax.Context>
-							<div style={displayFlex}><div style={flexItem}>B</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionB }</MathJax.Node></div></div>
-						</MathJax.Context>
-						<MathJax.Context>
-							<div style={displayFlex}><div style={flexItem}>C</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionC }</MathJax.Node></div></div>
-						</MathJax.Context>
-						<MathJax.Context>
-							<div style={displayFlex}><div style={flexItem}>D</div><div style={flexItemAuto}><MathJax.Node inline>{ this.props.values.optionD }</MathJax.Node></div></div>
-						</MathJax.Context>
-						<MathJax.Context>
-							<div style={{ marginTop: '16px', backgroundColor: '#f6f6f6', padding: '15px' }}><MathJax.Node inline>{ this.props.values.explanation }</MathJax.Node></div>
-						</MathJax.Context>
-					</div>
-				</p>
+				{this.props.values.hasLatex ? this.getPreviewTemplate(value) : <p />}
 			</div>
 		);
 	},
