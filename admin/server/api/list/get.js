@@ -9,7 +9,7 @@ module.exports = function (req, res) {
 	var includeResults = req.query.results !== 'false';
 	if (req.user.roles.toLowerCase() !== 'admin' && req.list.model.modelName === 'Quiz') {
 		if (req.user.curriculum) {
-			where.curriculum = req.user.curriculum;
+			where.curriculum = { $in: req.user.curriculum };
 		}
 		where.assignedTo = req.user._id;
 	}
