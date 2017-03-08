@@ -109,9 +109,11 @@ module.exports = Field.create({
 			...style,
 			lineHeight: '1.3',
 		};
+		// {this.props.values.hasLatex ? this.getButtonsTemplate() : <div />}
+		// {this.props.values.hasLatex ? this.getPreviewTemplate(value) : <p />}
 		return (
 			<div>
-				{this.props.values.hasLatex ? this.getButtonsTemplate() : <div />}
+				{ this.getButtonsTemplate() }
 				<FormInput
 					autoComplete="off"
 					multiline
@@ -121,7 +123,7 @@ module.exports = Field.create({
 					style={styles}
 					value={value}
 				/>
-				{this.props.values.hasLatex ? this.getPreviewTemplate(value) : <p />}
+				{ this.getPreviewTemplate(value) }
 			</div>
 		);
 	},
