@@ -10,6 +10,7 @@ import AlertMessages from './AlertMessages';
 import { Fields } from 'FieldTypes';
 import InvalidFieldType from './InvalidFieldType';
 import { Button, Form, Modal } from '../elemental';
+import _ from 'lodash';
 
 const CreateForm = React.createClass({
 	displayName: 'CreateForm',
@@ -35,6 +36,24 @@ const CreateForm = React.createClass({
 			var FieldComponent = Fields[field.type];
 			values[field.path] = FieldComponent.getDefaultValue(field);
 		});
+
+		Object.keys(this.props.list.fields).forEach(key => {
+			var field = this.props.list.fields[key];
+			if (field.type === 'relationship' && typeof field.filters === 'object') {
+				var reg = /^:/;
+				Object.keys(field.filters).forEach(filterKey => {
+					var filterField = field.filters[filterKey];
+					if (reg.test(filterField)) {
+						if (!_.has(this.dependsMap, filterKey)) {
+							this.dependsMap[filterKey] = [];
+						}
+						this.dependsMap[filterKey].push(key);
+						this.props.list.fields[filterKey].cacheAsyncOptions = false;
+					}
+				});
+			}
+		});
+
 		return {
 			values: values,
 			alerts: {},
@@ -46,6 +65,17 @@ const CreateForm = React.createClass({
 	componentWillUnmount () {
 		document.body.removeEventListener('keyup', this.handleKeyPress, false);
 	},
+	dependsMap: {},
+	resetDependentFieldsOfField: function (fieldName, values) {
+		if (_.has(this.dependsMap, fieldName)) {
+			var fieldNames = this.dependsMap[fieldName];
+			Object.keys(fieldNames).forEach(key => {
+				var dependentFieldName = fieldNames[key];
+				values[dependentFieldName] = null;
+				this.resetDependentFieldsOfField(dependentFieldName, values);
+			});
+		}
+	},
 	handleKeyPress (evt) {
 		if (vkey[evt.keyCode] === '<escape>') {
 			this.props.onCancel();
@@ -55,6 +85,7 @@ const CreateForm = React.createClass({
 	handleChange (event) {
 		var values = assign({}, this.state.values);
 		values[event.path] = event.value;
+		this.resetDependentFieldsOfField(event.path, values);
 		this.setState({
 			values: values,
 		});
