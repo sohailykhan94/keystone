@@ -189,10 +189,6 @@ module.exports = Field.create({
 		this.closeCreate();
 	},
 
-	shouldReloadOptions () {
-		return true;
-	},
-
 	renderSelect (noedit) {
 		return (
 			<Select.Async
@@ -201,7 +197,6 @@ module.exports = Field.create({
 				loadOptions={this.loadOptions}
 				autoload={false}
 				cache={false}
-				shouldReloadOptions={this.shouldReloadOptions}
 				labelKey="name"
 				name={this.getInputName(this.props.path)}
 				onChange={this.valueChanged}
