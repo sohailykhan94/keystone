@@ -122,11 +122,20 @@ module.exports = Field.create({
 			});
 		}, (err, expanded) => {
 			if (!this.isMounted()) return;
+			var mapped = expanded.map(this.setCustomLabel);
 			this.setState({
 				loading: false,
-				value: this.props.many ? expanded : expanded[0],
+				value: this.props.many ? mapped : mapped[0],
 			});
 		});
+	},
+
+	setCustomLabel (obj) {
+		var rObj = obj;
+		if (this.props.path === 'concepts' && obj.fields.topic && obj.fields.subTopic) {
+			rObj.label = obj.name + ' (Topic: ' + obj.fields.topic + ', Sub-topic: ' + obj.fields.subTopic + ')';
+		}
+		return rObj;
 	},
 
 	// NOTE: this seems like the wrong way to add options to the Select
@@ -144,8 +153,10 @@ module.exports = Field.create({
 				return callback(null, []);
 			}
 			data.results.forEach(this.cacheItem);
+			var mapped = data.results.map(this.setCustomLabel);
+			mapped.forEach(this.cacheItem);
 			callback(null, {
-				options: data.results,
+				options: mapped,
 				complete: data.results.length === data.count,
 			});
 		});
@@ -197,7 +208,7 @@ module.exports = Field.create({
 				loadOptions={this.loadOptions}
 				autoload={false}
 				cache={false}
-				labelKey="name"
+				labelKey={this.props.path === 'concepts' ? 'label' : 'name'}
 				name={this.getInputName(this.props.path)}
 				onChange={this.valueChanged}
 				simpleValue
