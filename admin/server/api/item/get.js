@@ -23,6 +23,12 @@ module.exports = function (req, res) {
 	} else {
 		query.exec(callback);
 	}
+
+	if (req.query.expandRelationshipFields && req.query.expandRelationshipFields !== 'false') {
+		req.list.relationshipFields.forEach(function (i) {
+			query.populate(i.path);
+		});
+	}
 	function callback (err, item) {
 
 		if (err) return res.status(500).json({ err: 'database error', detail: err });

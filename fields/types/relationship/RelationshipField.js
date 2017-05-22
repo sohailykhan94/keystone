@@ -112,8 +112,9 @@ module.exports = Field.create({
 			value: null,
 		});
 		async.map(values, (value, done) => {
+			const url = this.props.refList.path === 'subjects' ? (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic&expandRelationshipFields=true') : (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic');
 			xhr({
-				url: Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic',
+				url: url,
 				responseType: 'json',
 			}, (err, resp, data) => {
 				if (err || !data) return done(err);
@@ -135,6 +136,9 @@ module.exports = Field.create({
 		if (this.props.path === 'concepts' && obj.fields.topic && obj.fields.subTopic) {
 			rObj.label = obj.name + ' (Topic: ' + obj.fields.topic + ', Sub-topic: ' + obj.fields.subTopic + ')';
 		}
+		if (this.props.path === 'subject') {
+			rObj.label = obj.name + ' (Curriculum: ' + obj.fields.curriculum.name + ')';
+		}
 		return rObj;
 	},
 
@@ -144,8 +148,9 @@ module.exports = Field.create({
 		// NOTE: this seems like the wrong way to add options to the Select
 		this.loadOptionsCallback = callback;
 		const filters = this.buildFilters();
+		const url = this.props.refList.path === 'subjects' ? (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&expandRelationshipFields=true&search=' + input + '&' + filters) : (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&search=' + input + '&' + filters);
 		xhr({
-			url: Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&search=' + input + '&' + filters,
+			url: url,
 			responseType: 'json',
 		}, (err, resp, data) => {
 			if (err) {
@@ -208,7 +213,7 @@ module.exports = Field.create({
 				loadOptions={this.loadOptions}
 				autoload={false}
 				cache={false}
-				labelKey={this.props.path === 'concepts' ? 'label' : 'name'}
+				labelKey={this.props.path === 'concepts' || this.props.path === 'subject' ? 'label' : 'name'}
 				name={this.getInputName(this.props.path)}
 				onChange={this.valueChanged}
 				simpleValue
