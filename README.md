@@ -11,6 +11,9 @@ You can also deploy a starter project to [Heroku](https://www.heroku.com/) for f
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/JedWatson/keystone-starter)
 
+## Admin settings
+Edit `/admin/server/api/list/get.js`, `/admin/client/App/App.js` and  `/admin/client/App/screens/List/index.js`
+
 
 ## Keystone 4.0 Beta Released!!!
 

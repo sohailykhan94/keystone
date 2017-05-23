@@ -8,10 +8,7 @@ module.exports = function (req, res) {
 	var includeCount = req.query.count !== 'false';
 	var includeResults = req.query.results !== 'false';
 	if (req.user.roles.toLowerCase() !== 'admin' && req.list.model.modelName === 'Quiz') {
-		if (req.user.curriculum) {
-			where.curriculum = { $in: req.user.curriculum };
-		}
-		where.assignedTo = req.user._id;
+		where.curriculum = { $in: req.user.curriculum };
 	}
 	if (includeResults && fields) {
 		if (fields === 'false') {

@@ -72,6 +72,9 @@ const ListView = React.createClass({
 		this.props.dispatch(selectList(this.props.params.listId));
 		this.parseQueryParams();
 		this.props.dispatch(loadInitialItems());
+		if (Keystone.user.role.toLowerCase() === 'checker') {
+			this.props.lists.data[this.props.params.listId].nocreate = true;
+		}
 		const isNoCreate = this.props.lists.data[this.props.params.listId].nocreate;
 		const shouldOpenCreate = this.props.location.search === '?create';
 		this.setState({
