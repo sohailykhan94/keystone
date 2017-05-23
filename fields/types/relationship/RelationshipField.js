@@ -112,7 +112,7 @@ module.exports = Field.create({
 			value: null,
 		});
 		async.map(values, (value, done) => {
-			const url = this.props.refList.path === 'subjects' ? (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic&expandRelationshipFields=true') : (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic');
+			const url = this.props.paths.preview.length ? (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic&expandRelationshipFields=true') : (Keystone.adminPath + '/api/' + this.props.refList.path + '/' + value + '?basic');
 			xhr({
 				url: url,
 				responseType: 'json',
@@ -131,13 +131,29 @@ module.exports = Field.create({
 		});
 	},
 
+	getDeepObj (paths, fields) {
+		var rProperty = fields;
+		for (var j = 0; j < paths.length; j++) {
+			rProperty = (function (index) {
+				return rProperty[paths[index]];
+			})(j);
+		}
+		return rProperty;
+	},
+
 	setCustomLabel (obj) {
 		var rObj = obj;
-		if (this.props.path === 'concepts' && obj.fields.topic && obj.fields.subTopic) {
-			rObj.label = obj.name + ' (Topic: ' + obj.fields.topic + ', Sub-topic: ' + obj.fields.subTopic + ')';
-		}
-		if (this.props.path === 'subject') {
-			rObj.label = obj.name + ' (Curriculum: ' + obj.fields.curriculum.name + ')';
+		if (this.props.paths.preview.length) {
+			var displayLabel = this.props.paths.displayLabel.split('$1');
+			var label = ' ';
+			for (var i = 0; i < this.props.paths.preview.length; i++) {
+				var labelObject = obj.fields[this.props.paths.preview[i]];
+				if (this.props.paths.preview[i].indexOf('.')) {
+					labelObject = this.getDeepObj(this.props.paths.preview[i].split('.'), obj.fields);
+				}
+				label = label + displayLabel[i] + labelObject;
+			}
+			rObj.label = obj.name + label + displayLabel[displayLabel.length - 1];
 		}
 		return rObj;
 	},
@@ -148,7 +164,7 @@ module.exports = Field.create({
 		// NOTE: this seems like the wrong way to add options to the Select
 		this.loadOptionsCallback = callback;
 		const filters = this.buildFilters();
-		const url = this.props.refList.path === 'subjects' ? (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&expandRelationshipFields=true&search=' + input + '&' + filters) : (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&search=' + input + '&' + filters);
+		const url = this.props.paths.preview.length ? (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&expandRelationshipFields=true&search=' + input + '&' + filters) : (Keystone.adminPath + '/api/' + this.props.refList.path + '?basic&search=' + input + '&' + filters);
 		xhr({
 			url: url,
 			responseType: 'json',
@@ -213,7 +229,7 @@ module.exports = Field.create({
 				loadOptions={this.loadOptions}
 				autoload={false}
 				cache={false}
-				labelKey={this.props.path === 'concepts' || this.props.path === 'subject' ? 'label' : 'name'}
+				labelKey={this.props.paths.preview.length ? 'label' : 'name'}
 				name={this.getInputName(this.props.path)}
 				onChange={this.valueChanged}
 				simpleValue

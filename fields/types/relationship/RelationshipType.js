@@ -13,6 +13,8 @@ var definePrototypeGetters = require('../../utils/definePrototypeGetters');
 function relationship (list, path, options) {
 	this.many = (options.many) ? true : false;
 	this.filters = options.filters;
+	this.preview = options.preview;
+	this.displayLabel = options.displayLabel;
 	this.createInline = (options.createInline) ? true : false;
 	this._defaultSize = 'full';
 	this._nativeType = keystone.mongoose.Schema.Types.ObjectId;
@@ -78,6 +80,8 @@ relationship.prototype.addToSchema = function (schema) {
 	};
 	this.paths = {
 		refList: this.options.refListPath || this.path + 'RefList',
+		preview: (this.options.preview ? this.options.preview : false),
+		displayLabel: (this.options.displayLabel ? this.options.displayLabel : false),
 	};
 	schema.path(this.path, this.many ? [def] : def);
 	schema.virtual(this.paths.refList).get(function () {
