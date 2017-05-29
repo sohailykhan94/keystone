@@ -7,8 +7,13 @@ module.exports = function (req, res) {
 	var fields = req.query.fields;
 	var includeCount = req.query.count !== 'false';
 	var includeResults = req.query.results !== 'false';
-	if (req.user.roles.toLowerCase() !== 'admin' && req.list.model.modelName === 'Quiz') {
-		where.curriculum = { $in: req.user.curriculum };
+	if (req.user.roles.toLowerCase() !== 'admin') {
+		if (req.list.model.modelName === 'Quiz' || req.list.model.modelName === 'SourceQuestion' || req.list.model.modelName === 'Subject') {
+			where.curriculum = { $in: req.user.curriculum };
+		}
+		if (req.list.model.modelName === 'Curriculum') {
+			where._id = { $in: req.user.curriculum };
+		}
 	}
 	if (includeResults && fields) {
 		if (fields === 'false') {
