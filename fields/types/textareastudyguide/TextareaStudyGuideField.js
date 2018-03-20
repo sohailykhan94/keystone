@@ -33,9 +33,13 @@ module.exports = Field.create({
 
 						return (
 							<div key={index}>
-								<MathJax.Context>
-									<span><MathJax.Node inline>{preImgString}</MathJax.Node></span>
-								</MathJax.Context>
+								{
+									!!preImgString && (
+										<MathJax.Context>
+											<span><MathJax.Node inline>{preImgString}</MathJax.Node></span>
+										</MathJax.Context>
+									)
+								}
 								{
 									uploadedImage && (
 										<img style={imageStyle} src={uploadedImage.url} />
@@ -46,9 +50,11 @@ module.exports = Field.create({
 					})
 				}
 				{
-					<MathJax.Context>
-						<span><MathJax.Node inline>{currentValue}</MathJax.Node></span>
-					</MathJax.Context>
+					!!currentValue && (
+						<MathJax.Context>
+							<span><MathJax.Node inline>{currentValue}</MathJax.Node></span>
+						</MathJax.Context>
+					)
 				}
 			</div>
 		);

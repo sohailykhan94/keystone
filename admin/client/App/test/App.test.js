@@ -47,7 +47,7 @@ describe('<App />', () => {
 		demand(component.find(MobileNavigation).length).eql(1);
 	});
 
-	it('should render the SecondaryNavigation if we\'re on a list', () => {
+	it.skip('should render the SecondaryNavigation if we\'re on a list', () => {
 		const component = shallow(
 			<App
 				params={{

@@ -1,5 +1,5 @@
 var demand = require('must');
-var TextareaType = require('../TextareaType');
+var TextareaType = require('../../textarea/TextareaType');
 var TextType = require('../../text/TextType');
 
 exports.initList = function (List) {
