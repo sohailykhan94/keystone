@@ -1,6 +1,7 @@
 import Field from '../Field';
 import React from 'react';
-import { FormInput } from '../../../admin/client/App/elemental';
+import { Button, FormInput } from '../../../admin/client/App/elemental';
+import { btnStyling } from '../../styles';
 var MathJax = require('react-mathjax/src');
 
 module.exports = Field.create({
@@ -10,8 +11,41 @@ module.exports = Field.create({
 		type: 'TextareaStudyGuide',
 	},
 
+	// HELPERS
+	triggerTemplater (templateString) {
+		var val = {
+			target: {
+				value: this.props.value ? (this.props.value + ' ' + templateString) : templateString,
+			},
+		};
+		this.valueChanged(val);
+	},
+
+	getButtonsTemplate () {
+		return (
+			<div>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('/image {image_1}')}>
+					Image 1
+				</Button>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('/image {image_2}')}>
+					Image 2
+				</Button>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('/image {image_3}')}>
+					Image 3
+				</Button>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('/image {image_4}')}>
+					Image 4
+				</Button>
+				<Button variant="hollow" style={btnStyling} size="xsmall" onClick={() => this.triggerTemplater('/image {image_5}')}>
+					Image 5
+				</Button>
+			</div>
+		);
+	},
+
 	renderImages (value, imagesArr) {
 		let currentValue = value;
+		const { hasLatex } = this.props.values;
 		const imageStyle = {
 			maxWidth: '246px',
 			margin: '0 auto',
@@ -34,11 +68,11 @@ module.exports = Field.create({
 						return (
 							<div key={index}>
 								{
-									!!preImgString && (
+									hasLatex ? (
 										<MathJax.Context>
 											<span><MathJax.Node inline>{preImgString}</MathJax.Node></span>
 										</MathJax.Context>
-									)
+									) : <p>{preImgString}</p>
 								}
 								{
 									uploadedImage && (
@@ -50,11 +84,11 @@ module.exports = Field.create({
 					})
 				}
 				{
-					!!currentValue && (
+					hasLatex ? (
 						<MathJax.Context>
 							<span><MathJax.Node inline>{currentValue}</MathJax.Node></span>
 						</MathJax.Context>
-					)
+					) : <p>{ currentValue }</p>
 				}
 			</div>
 		);
@@ -70,6 +104,8 @@ module.exports = Field.create({
 			overflowY: 'scroll',
 			position: 'relative',
 		};
+
+		const { hasLatex } = this.props.values;
 
 		const absoluteBorder = {
 			position: 'absolute',
@@ -90,9 +126,11 @@ module.exports = Field.create({
 						value && value.match(IMAGE_REGEX) ? (
 							this.renderImages(value, value.match(IMAGE_REGEX))
 						) : (
-							<MathJax.Context>
-								<span><MathJax.Node inline>{value}</MathJax.Node></span>
-							</MathJax.Context>
+							hasLatex ? (
+								<MathJax.Context>
+									<span><MathJax.Node inline>{value}</MathJax.Node></span>
+								</MathJax.Context>
+							) : <p>{ value }</p>
 						)
 					}
 				</div>
@@ -110,6 +148,7 @@ module.exports = Field.create({
 		};
 		return (
 			<div>
+				{ this.getButtonsTemplate() }
 				<FormInput
 					autoComplete="off"
 					multiline
