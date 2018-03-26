@@ -47,7 +47,7 @@ module.exports = Field.create({
 		let currentValue = value;
 		const { hasLatex } = this.props.values;
 		const imageStyle = {
-			maxWidth: '246px',
+			maxWidth: '240px',
 			margin: '0 auto',
 			display: 'block',
 			marginTop: '1rem',
@@ -96,7 +96,7 @@ module.exports = Field.create({
 
 	getPreviewTemplate (value) {
 		const stylesIphone = {
-			width: 328,
+			width: 320,
 			backgroundColor: '#fff',
 			border: '1px solid #666',
 			padding: 24,
