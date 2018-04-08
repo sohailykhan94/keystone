@@ -553,7 +553,12 @@ const ListView = React.createClass({
 		return (
 			<div>
 				{this.renderHeader()}
-				{this.props.active.id === 'source-questions' || this.props.active.id === 'quizzes' ? this.renderButtons() : null}
+				{
+					(
+						this.props.active.id === 'source-questions'
+						|| this.props.active.id === 'quizzes'
+					) ? this.renderButtons() : null
+				}
 				<Container>
 					<div style={{ height: 35, marginBottom: '1em', marginTop: '1em' }}>
 						{this.renderManagement()}

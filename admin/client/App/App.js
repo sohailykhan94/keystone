@@ -33,7 +33,10 @@ const App = (props) => {
 	if (props.params.listId) {
 		currentList = listsByPath[props.params.listId];
 		var hasAccess = true;
-		if (Keystone.user.role.toLowerCase() !== 'admin' && currentList.key !== 'Quiz') {
+		if (
+			Keystone.user.role.toLowerCase() !== 'admin'
+			&& (currentList.key !== 'Quiz' && currentList.key !== 'StudyGuide')
+		) {
 			hasAccess = false;
 		}
 		// If we're on a list path that doesn't exist (e.g. /keystone/gibberishasfw34afsd) this will
