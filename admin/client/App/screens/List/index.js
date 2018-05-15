@@ -31,16 +31,17 @@ import ItemsTable from './components/ItemsTable/ItemsTable';
 import UpdateForm from './components/UpdateForm';
 import { plural as pluralize } from '../../../utils/string';
 import { listsByPath } from '../../../utils/lists';
+import { checkForQueryChange } from '../../../utils/queryParams';
 
 import {
 	deleteItems,
-	setActiveColumns,
 	setActiveSearch,
 	setActiveSort,
 	setCurrentPage,
 	selectList,
 	loadInitialItems,
 	setFilter,
+	clearCachedQuery,
 } from './actions';
 
 import {
@@ -69,48 +70,32 @@ const ListView = React.createClass({
 		// When we directly navigate to a list without coming from another client
 		// side routed page before, we need to initialize the list and parse
 		// possibly specified query parameters
+
 		this.props.dispatch(selectList(this.props.params.listId));
 		this.parseQueryParams();
 		this.props.dispatch(loadInitialItems());
 		if (Keystone.user.role.toLowerCase() === 'checker') {
 			this.props.lists.data[this.props.params.listId].nocreate = true;
 		}
+
 		const isNoCreate = this.props.lists.data[this.props.params.listId].nocreate;
 		const shouldOpenCreate = this.props.location.search === '?create';
+
 		this.setState({
 			showCreateForm: (shouldOpenCreate && !isNoCreate) || Keystone.createFormErrors,
 		});
+
 	},
 	componentWillReceiveProps (nextProps) {
 		// We've opened a new list from the client side routing, so initialize
 		// again with the new list id
-		if (nextProps.params.listId !== this.props.params.listId) {
+		const isReady = this.props.lists.ready && nextProps.lists.ready;
+		if (isReady && checkForQueryChange(nextProps, this.props)) {
 			this.props.dispatch(selectList(nextProps.params.listId));
 		}
 	},
-	/**
-	 * Parse the current query parameters and change the state accordingly
-	 * Only called when directly opening a list
-	 */
-	parseQueryParams () {
-		const query = this.props.location.query;
-		Object.keys(query).forEach((key) => {
-			switch (key) {
-				case 'columns':
-					this.props.dispatch(setActiveColumns(query[key]));
-					break;
-				case 'page':
-					this.props.dispatch(setCurrentPage(query[key]));
-					break;
-				case 'search':
-					// Fill the search input field with the current search
-					this.props.dispatch(setActiveSearch(query[key]));
-					break;
-				case 'sort':
-					this.props.dispatch(setActiveSort(query[key]));
-					break;
-			}
-		});
+	componentWillUnmount () {
+		this.props.dispatch(clearCachedQuery());
 	},
 
 	// ==============================
